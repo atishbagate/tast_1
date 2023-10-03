@@ -1,5 +1,5 @@
 import  {MouseEvent} from 'react';
-import { selectCount, setCount } from "../slices/CounterSlice";
+import { Post_Counter, selectCount, setCount } from "../slices/CounterSlice";
 import { useAppDispatch, useAppSelector } from "../slices/appHooks"
 
  
@@ -7,15 +7,17 @@ export default function Counter() {
   const dispatch = useAppDispatch();
   const counter = useAppSelector(selectCount);
 
+
 const addHandler = (e:MouseEvent<HTMLButtonElement>) :void => {
-  e.preventDefault();
-  // alert("button Clicked");
-  dispatch(setCount(Number(counter) + 1))
+  e.preventDefault(); 
+  dispatch(setCount(Number(counter) + 1)) 
+  dispatch(Post_Counter())
+
 }
 const subtractHandler= (e:MouseEvent<HTMLButtonElement>) :void => {
-  e.preventDefault();
-  // alert("button Clicked");
+  e.preventDefault(); 
   dispatch(setCount(Number(counter) - 1))
+  dispatch(Post_Counter())
 }
 
   return (
