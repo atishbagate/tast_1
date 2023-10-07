@@ -1,6 +1,7 @@
 import {  useEffect } from "react";
 import { fetchPOSTS, selectData } from "../../slices/CounterSlice"
 import { useAppDispatch, useAppSelector } from "../../slices/appHooks" 
+import { Button } from "@mui/material";
 
 
  const Home = () => {
@@ -20,6 +21,8 @@ import { useAppDispatch, useAppSelector } from "../../slices/appHooks"
     {
       postdata ? <p>{postdata ? JSON.stringify(postdata) : ""}</p> : ""
     }
+    <Button variant="text">Text</Button>
+    <Button variant="contained">Contained</Button>
     </>
   )
 }
