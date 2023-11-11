@@ -1,7 +1,7 @@
 import  {MouseEvent} from 'react';
 import { Post_Counter, selectCount, setCount } from "../slices/CounterSlice";
 import { useAppDispatch, useAppSelector } from "../slices/appHooks"
-
+import Button from '@mui/material/Button';
  
 export default function Counter() {
   const dispatch = useAppDispatch();
@@ -23,9 +23,9 @@ const subtractHandler= (e:MouseEvent<HTMLButtonElement>) :void => {
   return (
     <div>
       <p>Counter</p>
-      <h2>{counter}</h2>
-      <button onClick={addHandler}>Add</button>
-      <button onClick={subtractHandler}>Subtract</button>
+      <h2 className='pl-3'>{counter}</h2> 
+      <Button variant="contained"onClick={addHandler}>Add</Button> 
+      <Button variant="contained" onClick={subtractHandler}>Subtract</Button>
     </div>
   )
 }
