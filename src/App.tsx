@@ -5,6 +5,7 @@ import ErrorPage from "./Pages/ErrorPage/ErrorPage";
 import Parent from "./Pages/CallBackHook/Parent";
 import ParentUseEffect from "./Pages/useEffectHook/Parent";
 import UseRefParent from "./Pages/useRef/UseRefParent";
+import ParentUseMemo from "./Pages/useMemo/ParentUseMemo";
  
 export const router = createBrowserRouter(
   createRoutesFromElements(
@@ -15,6 +16,7 @@ export const router = createBrowserRouter(
     <Route path="/parent" element={<Parent/>} />
     <Route path="/useEffect" element={<ParentUseEffect/>} />
     <Route path="/useRefParent" element={<UseRefParent />} />
+    <Route path="/useMemo" element={<ParentUseMemo /> } />
     </>
   ) 
 )
