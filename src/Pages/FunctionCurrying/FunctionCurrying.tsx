@@ -1,12 +1,9 @@
 import { useState } from "react";
-
 const FunctionCurrying = () => {
-
     const [state, setState] = useState({
         name: '',
         email: '',
     });
-
     const handleChange = (fieldName: string) => (event) => {
         const { value } = event.target;
         console.log("value changed", value);
@@ -15,7 +12,6 @@ const FunctionCurrying = () => {
             [fieldName]: value,
         }));
     };
-
     return (
         <>
             <h2>FunctionCurrying</h2>
