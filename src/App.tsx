@@ -11,6 +11,7 @@ import ParentCustomHok from "./Pages/CustomHook/ParentCustonHook";
 import FunctionCurrying from "./Pages/FunctionCurrying/FunctionCurrying";
 import Main from "./Pages/ErrorBoundry/Main";
 import LazyLoading from "./Pages/LazyLoading/LazyLoading";
+import APIMainCalling from "./Pages/APICalling/TryCatch/APIMainCalling";
 
 export const router = createBrowserRouter(
   createRoutesFromElements(
@@ -27,6 +28,7 @@ export const router = createBrowserRouter(
       <Route path="/FunctionCurrying" element={<FunctionCurrying />} />
       <Route path="/ErrorBoundry" element={<Main />} />
       <Route path="/LazyLoading" element={<LazyLoading />} />
+      <Route path="/APIMainCalling" element={<APIMainCalling />} />
     </>
   )
 )
