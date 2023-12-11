@@ -16,7 +16,7 @@ import { useAppDispatch, useAppSelector } from "../../slices/appHooks"
 
   return (
     <>
-    <div>Home</div>
+    <div className="border-2 solid red">Home</div>
     {
       postdata ? <p>{postdata ? JSON.stringify(postdata) : ""}</p> : ""
     }

@@ -1,24 +1,21 @@
-import  {MouseEvent} from 'react';
+import { MouseEvent } from "react";
 import { Post_Counter, selectCount, setCount } from "../slices/CounterSlice";
-import { useAppDispatch, useAppSelector } from "../slices/appHooks"
+import { useAppDispatch, useAppSelector } from "../slices/appHooks";
 
- 
 export default function Counter() {
   const dispatch = useAppDispatch();
   const counter = useAppSelector(selectCount);
 
-
-const addHandler = (e:MouseEvent<HTMLButtonElement>) :void => {
-  e.preventDefault(); 
-  dispatch(setCount(Number(counter) + 1)) 
-  dispatch(Post_Counter())
-
-}
-const subtractHandler= (e:MouseEvent<HTMLButtonElement>) :void => {
-  e.preventDefault(); 
-  dispatch(setCount(Number(counter) - 1))
-  dispatch(Post_Counter())
-}
+  const addHandler = (e: MouseEvent<HTMLButtonElement>): void => {
+    e.preventDefault();
+    dispatch(setCount(Number(counter) + 1));
+    dispatch(Post_Counter());
+  };
+  const subtractHandler = (e: MouseEvent<HTMLButtonElement>): void => {
+    e.preventDefault();
+    dispatch(setCount(Number(counter) - 1));
+    dispatch(Post_Counter());
+  };
 
   return (
     <div>
@@ -27,5 +24,5 @@ const subtractHandler= (e:MouseEvent<HTMLButtonElement>) :void => {
       <button onClick={addHandler}>Add</button>
       <button onClick={subtractHandler}>Subtract</button>
     </div>
-  )
+  );
 }
