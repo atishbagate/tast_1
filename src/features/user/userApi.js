@@ -42,26 +42,55 @@ export async function loginUserApi(data) {
 
   console.log(d);
 
-  if (d.status === "failed") {
-    return new Promise((resolve, reject) => {
-      reject({ data: d.message });
-    });
-  } else {
-    return new Promise((resolve, reject) => {
-      localStorage.setItem("userId", d.user_id);
-      localStorage.setItem("token", d.token);
-      const newUser = {
-        userId: d.user_id,
-        token: d.token,
-      };
-      resolve({ data: newUser });
-    });
-  }
+  // if (d.status === "failed") {
+  //   console.log("failed");
+  //   return new Promise((resolve, reject) => {
+  //     reject({ data: null });
+  //   });
+  // } else {
+  return new Promise((resolve, reject) => {
+    localStorage.setItem("userId", d.user_id);
+    localStorage.setItem("token", d.token);
+    const newUser = {
+      userId: d.user_id,
+      token: d.token,
+    };
+
+    resolve({ data: newUser });
+  });
 }
+// }
 
 export async function editUserApi(data) {
+  const token = localStorage.getItem("token");
+  const user_id = localStorage.getItem("userId");
+
+  const params = {
+    first_name: data.name,
+    last_name: data.lastName,
+    email: data.email,
+    mobile: data.phoneNumber,
+  };
+  const response = await fetch(
+    `https://stagrecords.swasth.net/api/editprofile`,
+    {
+      method: "PUT",
+      body: JSON.stringify(params),
+      headers: {
+        "Content-Type": "text/plain",
+        swasthtoken: token,
+      },
+    }
+  );
+  const d = await response.data();
+  console.log(d);
   return new Promise((resolve, reject) => {
-    resolve({ data });
+    const newUser = {
+      userId: d.user_id,
+      token: d.token,
+    };
+
+    resolve({ data: newUser });
   });
 }
 

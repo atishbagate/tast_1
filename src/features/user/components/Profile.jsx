@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { STATUS } from "../../../utils/constants";
 import { useForm } from "react-hook-form";
 import { updateUser,selectUser } from "../userSlice";
@@ -9,6 +9,7 @@ export default function Profile() {
   const [edit, setEdit] = useState(false);
   const dispatch = useDispatch();
   const user = useSelector(selectUser);
+  const [userDetails,setUsetDetails] = useState(null)
 
   const {
     register,
@@ -20,6 +21,27 @@ export default function Profile() {
     dispatch(updateUser(data))
   };
   
+  const getUser = async()=>{
+    
+  const token = localStorage.getItem("token");
+  const user_id = localStorage.getItem("userId");
+
+  console.log(token)
+  const response = await fetch(`https://stagrecords.swasth.net/api/myprofile`, {
+      method: "POST",
+      body: JSON.stringify({ user_id: user_id }),
+      headers: {
+        "Content-Type": "application/json",
+        swasthtoken: token,
+      },
+    });
+    const d = await response.data();
+    console.log(d);
+  }
+
+  useEffect(()=>{
+    getUser();
+  })
   if (user === null) return <Navigate to='/login' />
 
   return (
@@ -79,13 +101,13 @@ export default function Profile() {
                   </dt>
 
                   <dd className="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">
-                    Margot
+                    {userDetails?userDetails.first_name:"Tony"}
                   </dd>
                   <dt className="text-sm font-medium leading-6 text-gray-900">
                     last name
                   </dt>
                   <dd className="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">
-                    Foster
+                    {userDetails?userDetails.last_name:"Stark"}
                   </dd>
                 </div>
 
@@ -94,7 +116,7 @@ export default function Profile() {
                     Email address
                   </dt>
                   <dd className="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">
-                    margotfoster@example.com
+                  {userDetails?userDetails.email:"tonyStark@stakindustries.com"}
                   </dd>
                 </div>
 
@@ -103,7 +125,7 @@ export default function Profile() {
                     Mobile Number
                   </dt>
                   <dd className="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">
-                    9822445937
+                  {userDetails?userDetails.mobile:"9824530000"}
                   </dd>
                 </div>
               </dl>

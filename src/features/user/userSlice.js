@@ -35,6 +35,7 @@ export const updateUser = createAsyncThunk("auth/updateUser", async (data) => {
 //to logout User
 export const logOutUser = createAsyncThunk("auth/logOutUser", async (data) => {
   const res = await logOutUserApi(data);
+
   return res;
 });
 
@@ -62,9 +63,9 @@ const authSlice = createSlice({
         state.status = STATUS.LOADING;
       })
       .addCase(createUser.fulfilled, (state, action) => {
+        state.status = STATUS.IDEAL;
         state.user = action.payload.data;
         state.message = action.payload.message;
-        state.status = STATUS.IDEAL;
       })
       .addCase(createUser.rejected, (state, action) => {
         state.error = action.payload.data;
@@ -76,12 +77,13 @@ const authSlice = createSlice({
         state.status = STATUS.LOADING;
       })
       .addCase(loginUser.fulfilled, (state, action) => {
+        state.status = STATUS.IDEAL;
         state.user = action.payload.data;
-        state.state.status = STATUS.IDEAL;
       })
       .addCase(loginUser.rejected, (state, action) => {
-        state.error = action.payload.data;
+        console.log(action.payload);
         state.status = STATUS.ERROR;
+        state.error = action.payload.data;
       })
 
       //edit user
