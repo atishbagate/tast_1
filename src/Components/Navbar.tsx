@@ -10,13 +10,13 @@ import {
   logOutUser,
 } from "../features/user/userSlice";
 
-export default function Navbar({ title, Child }: any) {
+export default function Navbar({ title, Child }:any) {
   const dispatch = useDispatch();
   const currentUser = useSelector(selectUser);
 
   const handleSignOut = () => {
-    dispatch(logOutUser());
-    // dispatch(resetUser());
+    dispatch(logOutUser())
+    dispatch(resetUser())
   };
 
   return (

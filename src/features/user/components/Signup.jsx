@@ -1,26 +1,40 @@
-import { Link } from "react-router-dom";
+import { Link, Navigate, useNavigate } from "react-router-dom";
 import { STATUS } from "../../../utils/constants";
 import { useForm } from "react-hook-form";
-import { useDispatch,useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
-import { createUser } from "../userSlice";
+import {
+  createUser,
+  selectAuthStatus,
+  selectAuthError,
+  selectUserCreated,
+  resetMessages
+  
+} from "../userSlice";
+import { useEffect } from "react";
 export default function Signup() {
-
   const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  const apiStatus = useSelector(selectAuthStatus);
+  const errorMessage = useSelector(selectAuthError);
+  const userCreated = useSelector(selectUserCreated)
   const {
     register,
     handleSubmit,
+    reset,
     formState: { errors },
   } = useForm();
   //handle form submission
   const onSubmit = (data) => {
-    const {confirmPassword,...newData} = data;
-    dispatch(createUser(newData))
+    const { confirmPassword, ...newData } = data;
+    dispatch(createUser(newData));
   };
-  
+
   return (
     <div className="flex min-h-full flex-1 flex-col justify-center items-center ">
       <div className="mt-5 shadow-2xl sm:mx-auto w-1/3 p-5 rounded-2xl">
+
         <form
           noValidate
           onSubmit={handleSubmit(onSubmit)}
@@ -218,11 +232,11 @@ export default function Signup() {
             <button
               type="submit"
               className={`flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600  ${
-                status === STATUS.LOADING &&
+                apiStatus === STATUS.LOADING &&
                 "bg-indigo-500 text-white font-bold py-2 px-4 rounded opacity-50 cursor-not-allowed"
               } `}
             >
-              {status === STATUS.LOADING ? "Signing you up" : "Sign up"}
+              {apiStatus === STATUS.LOADING ? "Signing you up" : "Sign up"}
             </button>
           </div>
         </form>

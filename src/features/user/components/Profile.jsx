@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { STATUS } from "../../../utils/constants";
 import { useForm } from "react-hook-form";
-import { updateUser,selectUser } from "../userSlice";
+import { updateUser,selectUser, getUserDetails,selectUserDetails } from "../userSlice";
 import { useDispatch,useSelector } from "react-redux";
 import { Navigate } from 'react-router-dom'
 
@@ -9,49 +9,35 @@ export default function Profile() {
   const [edit, setEdit] = useState(false);
   const dispatch = useDispatch();
   const user = useSelector(selectUser);
-  const [userDetails,setUsetDetails] = useState(null)
+  const userDetails = useSelector(selectUserDetails)
 
   const {
     register,
     handleSubmit,
     formState: { errors },
+    reset,
   } = useForm();
   //handle form submission
   const onSubmit = (data) => {
     dispatch(updateUser(data))
+    reset()
+    setEdit(false);
   };
-  
-  const getUser = async()=>{
-    
-  const token = localStorage.getItem("token");
-  const user_id = localStorage.getItem("userId");
-
-  console.log(token)
-  const response = await fetch(`https://stagrecords.swasth.net/api/myprofile`, {
-      method: "POST",
-      body: JSON.stringify({ user_id: user_id }),
-      headers: {
-        "Content-Type": "application/json",
-        swasthtoken: token,
-      },
-    });
-    const d = await response.data();
-    console.log(d);
-  }
 
   useEffect(()=>{
-    getUser();
-  })
+    console.log("useEffect called.");
+     dispatch(getUserDetails());
+  },[edit]);
+
   if (user === null) return <Navigate to='/login' />
 
   return (
     <>
-    {console.log(user)}
       <div className="flex justify-center items-center">
         <div className="shadow-2xl  p-10 w-[50%] border-solid border-rose-200">
           <div className="flex justify-between">
             <h3 className="text-2xl font-semibold leading-7 text-gray-900">
-              {edit ? "Update Personal details" : "Personal details"}
+            {edit ? "Update Personal details" : "Personal details"}
             </h3>
             {edit ? (
               <svg
@@ -79,13 +65,13 @@ export default function Profile() {
                 xmlns="http://www.w3.org/2000/svg"
                 fill="none"
                 viewBox="0 0 24 24"
-                stroke-width="1.5"
+                strokeWidth="1.5"
                 stroke="currentColor"
                 className="w-6 h-6 cursor-pointer"
               >
                 <path
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
                   d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L10.582 16.07a4.5 4.5 0 01-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 011.13-1.897l8.932-8.931zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0115.75 21H5.25A2.25 2.25 0 013 18.75V8.25A2.25 2.25 0 015.25 6H10"
                 />
               </svg>
@@ -275,8 +261,7 @@ export default function Profile() {
             </div>
           )}
         </div>
-      </div>:
-    
+      </div>
     </>
   );
 }

@@ -104,7 +104,7 @@
 		},
 		{
 			"name": "logout",
-			"protocolProfileBehavior": {
+			"protocolProfileBehavior": logout{
 				"disableBodyPruning": true
 			},
 			"request": {
