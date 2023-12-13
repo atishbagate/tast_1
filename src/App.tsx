@@ -1,15 +1,27 @@
-import { createBrowserRouter, createRoutesFromElements, Route } from "react-router-dom";
-import Counter from "./Pages/Counter";
-import Home from "./Pages/Home/Home";
-import ErrorPage from "./Pages/ErrorPage/ErrorPage";
+import { useEffect } from "react";
+import { router } from "./Router";
+import { RouterProvider } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { setUser,selectUser,resetUser } from "./features/user/userSlice";
+import { Toaster } from 'react-hot-toast';
 
- 
-export const router = createBrowserRouter(
-  createRoutesFromElements(
+export default function App() {
+  const dispatch = useDispatch();
+  const id = localStorage.getItem("userId");
+    const token = localStorage.getItem("token");
+  useEffect(() => {
+  
+    const data = {
+      userId: id,
+      token: token,
+    };
+    if (id !== null) dispatch(setUser(data));
+  },[]);
+
+  return (
     <>
-     <Route path="*" element = {<ErrorPage/>} />
-    <Route path="/" element={<Counter />} /> 
-    <Route path="/home" element={<Home/>} />
+      <RouterProvider router={router} />
+      <Toaster />
     </>
-  ) 
-)
+  );
+}
